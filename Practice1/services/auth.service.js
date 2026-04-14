@@ -13,10 +13,9 @@ export const register = async ({ name, email, password }) => {
     throw new Error('User already exists');
   }
 
-  // hash password
+
   const hashed = await bcrypt.hash(password, 10);
 
-  // insert user
   const result = await pool.query(
     'INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING *',
     [name, email, hashed]
