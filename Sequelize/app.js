@@ -1,63 +1,48 @@
-import { Sequelize } from "sequelize";
+import { Sequelize, DataTypes } from "sequelize";
 
-const sequelize=new Sequelize({
-    database:"test",
-    username:"postgres",
-    password:"root",
-    host:"localhost",
-    dialect:"postgres"
-})
+const sequelize = new Sequelize({
+  database: "test",
+  username: "postgres",
+  password: "root",
+  host: "localhost",
+  dialect: "postgres"
+});
 
-//Test the database Connection 
+const User = sequelize.define("User", {
+  firstName: {
+    type: DataTypes.STRING
+  },
+  lastName: {
+    type: DataTypes.STRING
+  },
+  email: {
+    type: DataTypes.STRING,
+    unique: true,
+    validate: {
+      isEmail: true
+    }
+  }
+});
 
-sequelize
-    .authenticate()
-    .then(()=>{
-        console.log("Connection success");
-        
-    })
-    .catch(err=>{
-        console.error(err);
-        
-    })
+const start = async () => {
+  try {
+    await sequelize.authenticate();
+    console.log("Connection success");
 
-//Define a model
+    await sequelize.sync();
+    console.log("Database Synchronised");
 
-const User=sequelize.define('Customer',{
-    firstName:{
-        type:Sequelize.STRING
-    },
-    lastName:{
-        type:Sequelize.STRING
-    },
-    Email:{
-        type:Sequelize.STRING,
-        unique:true
-    },
-})
+    const user = await User.create({
+      firstName: "ABC",
+      lastName: "Pedro",
+      email: "abc@gmail.com"
+    });
 
+    console.log("User Created", user.toJSON());
 
-//Syncronise the model with database // create table if not exist
-
-sequelize
-    .sync()
-    .then(()=>{
-        console.log('Database Synchronised');
-        
-    })
-    .catch(err=>{
-        console.log(err);
-        
-    })
-
-User.create({
-    firstName:"JANA",
-    lastName:"Pedro",
-    Email:"tj@gmail.com"
-}).then(user =>{
-    console.log('User Created '  ,user.toJSON());
-    
-}).catch(err=>{
+  } catch (err) {
     console.error(err);
-    
-})
+  }
+};
+
+start();
