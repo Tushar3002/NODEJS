@@ -7,12 +7,10 @@ const Session = sequelize.define("Session", {
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
   },
-
   userId: {
     type: DataTypes.UUID,
     allowNull: false,
   },
-
   refreshTokenHash: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -22,7 +20,6 @@ const Session = sequelize.define("Session", {
       },
     },
   },
-
   ip: {
     type: DataTypes.STRING,
     allowNull: false,
