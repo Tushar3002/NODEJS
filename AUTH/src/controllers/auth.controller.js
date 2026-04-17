@@ -88,7 +88,6 @@ export async function login(req, res) {
   try {
     const { email, password } = req.body;
 
-    // 🔍 find user
     const user = await User.findOne({
       where: { email },
     });
@@ -122,7 +121,6 @@ export async function login(req, res) {
       .update(refreshToken)
       .digest("hex");
 
-    // 🗄️ create session
     const session = await Session.create({
       userId: user.id,
       refreshTokenHash,
@@ -130,7 +128,6 @@ export async function login(req, res) {
       userAgent: req.headers["user-agent"],
     });
 
-    // 🔑 access token
     const accessToken = jwt.sign(
       {
         id: user.id,
@@ -246,7 +243,7 @@ export async function refreshToken(req, res) {
       },
     );
 
-    const newrefreshTokenHash = crypto
+    const newRefreshTokenHash = crypto
       .createHash("sha256")
       .update(newRefreshToken)
       .digest("hex");
