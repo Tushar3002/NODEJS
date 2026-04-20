@@ -1,6 +1,5 @@
 
 
-import { where } from "sequelize";
 import { Product } from "../models/Product.model.js";
 
 //create
