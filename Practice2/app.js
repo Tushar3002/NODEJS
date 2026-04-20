@@ -1,4 +1,4 @@
-import express, { urlencoded } from 'express'
+import express from 'express'
 import productRouter from './routes/product.route.js'
 import cors from 'cors'
 const app=express()
