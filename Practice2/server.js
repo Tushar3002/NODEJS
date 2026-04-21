@@ -5,6 +5,5 @@ sequelize.sync().then(()=>{
     console.log('Database Connected');
     app.listen(5000,()=>{
         console.log(`Server is running `);
-        
     })
 })

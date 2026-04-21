@@ -2,12 +2,16 @@ import User from "../models/User.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-const SECRET = "mysecretkey";
+const SECRET = process.env.MY_SECRET;
 
-// REGISTER
 export const register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
+
+    const existingUser = await User.findOne({ where: { email } });
+    if (existingUser) {
+      return res.status(409).json({ message: "User already exists" });
+    }
 
     const hashed = await bcrypt.hash(password, 10);
 
@@ -17,13 +21,19 @@ export const register = async (req, res) => {
       password: hashed,
     });
 
-    res.json(user);
+    const token = jwt.sign(
+      { id: user.id, role: user.role },
+      process.env.MY_SECRET,
+      { expiresIn: "1d" },
+    );
+    const { password: _, ...userData } = user.toJSON();
+
+    return res.status(201).json({ user: userData, token });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: err.message });
   }
 };
 
-// LOGIN
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -36,13 +46,17 @@ export const login = async (req, res) => {
 
     if (!match) return res.status(400).json({ message: "Wrong password" });
 
-    const token = jwt.sign(
-      { id: user.id, role: user.role },
-      SECRET,
-      { expiresIn: "1d" }
-    );
+    const token = jwt.sign({ id: user.id, role: user.role }, SECRET, {
+      expiresIn: "1d",
+    });
 
-    res.json({ token });
+    // res.json({ token });
+    const { password: _, ...userData } = user.toJSON();
+
+res.status(200).json({
+  token,
+  user: userData,
+});
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
