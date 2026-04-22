@@ -1,6 +1,6 @@
 
 
-import { Product } from "../models/Product.model.js";
+import  Product  from "../models/Product.model.js";
 
 //create
 
