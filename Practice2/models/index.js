@@ -1,6 +1,6 @@
 
 import Order from "./Order.model.js";
-import OrderItems from "./OrderItems.model.js";
+import OrderItem from "./OrderItem.model.js";
 import Product from "./Product.model.js";
 import User from "./User.model.js";
 
@@ -8,15 +8,15 @@ import User from "./User.model.js";
 User.hasMany(Order);
 Order.belongsTo(User);
 
-Order.hasMany(OrderItems);
-OrderItems.belongsTo(Order);
+Order.hasMany(OrderItem);
+OrderItem.belongsTo(Order);
 
-Product.hasMany(OrderItems);
-OrderItems.belongsTo(Product);
+Product.hasMany(OrderItem);
+OrderItem.belongsTo(Product);
 
 export {
   User,
   Product,
   Order,
-  OrderItems
+  OrderItem
 };
