@@ -5,14 +5,15 @@ import Product from "./Product.model.js";
 import User from "./User.model.js";
 
 
-User.hasMany(Order);
-Order.belongsTo(User);
 
-Order.hasMany(OrderItem);
-OrderItem.belongsTo(Order);
+User.hasMany(Order, { foreignKey: "userId" });
+Order.belongsTo(User, { foreignKey: "userId" });
 
-Product.hasMany(OrderItem);
-OrderItem.belongsTo(Product);
+Order.hasMany(OrderItem, { foreignKey: "orderId" });
+OrderItem.belongsTo(Order, { foreignKey: "orderId" });
+
+Product.hasMany(OrderItem, { foreignKey: "productId" });
+OrderItem.belongsTo(Product, { foreignKey: "productId" });
 
 export {
   User,
