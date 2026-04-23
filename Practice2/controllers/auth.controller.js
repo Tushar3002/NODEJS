@@ -7,7 +7,7 @@ const SECRET = process.env.MY_SECRET;
 export const register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
-
+    console.log("SECRET:", process.env.MY_SECRET);
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
       return res.status(409).json({ message: "User already exists" });
@@ -30,8 +30,9 @@ export const register = async (req, res) => {
 
     return res.status(201).json({ user: userData, token });
   } catch (err) {
-    return res.status(500).json({ error: err.message });
-  }
+  console.error("REGISTER ERROR:", err);
+  return res.status(500).json({ error: err.message });
+}
 };
 
 export const login = async (req, res) => {
