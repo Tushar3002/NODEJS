@@ -6,8 +6,7 @@ export const validate=(schema)=>(req,res,next)=>{
         next()
     } catch (error) {
       return res.status(400).json({
-        message:error.message
-      })
-        
+        errors:error.message
+      }) 
     }
 }
