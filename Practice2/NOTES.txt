@@ -1,0 +1,5 @@
+THINGS STILL REMAINS:
+
+multer + cloudinary
+wishlist
+Payment

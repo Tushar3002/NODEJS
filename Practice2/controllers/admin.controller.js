@@ -1,6 +1,34 @@
 import Order from "../models/Order.model.js";
 import OrderItem from "../models/OrderItem.model.js";
 import Product from "../models/Product.model.js";
+import User from "../models/User.model.js";
+
+
+export const adminDashboard=async (req, res) => {
+  try {
+    const totalOrders = await Order.count();
+
+    const orders = await Order.findAll();
+
+    const totalRevenue = orders.reduce(
+      (sum, order) => sum + order.totalPrice,
+      0
+    );
+
+    const totalUsers = await User.count();
+
+    res.json({
+      totalOrders,
+      totalRevenue,
+      totalUsers,
+    });
+  } catch (err) {
+    console.error("DASHBOARD ERROR:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+}
+
+
 export const getAllOrders = async (req, res) => {
   try {
     const orders = await Order.findAll({

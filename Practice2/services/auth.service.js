@@ -30,6 +30,7 @@ export const registerUser = async ({ name, email, password }) => {
   return { user: userData, token };
 };
 
+
 export const loginUser = async ({ email, password }) => {
   const user = await User.findOne({ where: { email } });
 

@@ -12,7 +12,7 @@ export const createOrder = async (req, res) => {
     const products = await Product.findAll({
       where: { id: productIds },
     });
-
+  
     const orderItemsData = items.map((item) => {
       const product = products.find(p => p.id === item.productId);
 
