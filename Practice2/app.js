@@ -4,6 +4,7 @@ import cors from 'cors'
 import authRouter from './routes/auth.route.js'
 import orderRouter from "./routes/order.route.js";
 import adminRouter from './routes/admin.route.js';
+import wishRouter from './routes/wishlist.route.js';
 
 const app=express()
 
@@ -14,5 +15,7 @@ app.use('/api/products',productRouter)
 app.use('/api/auth',authRouter)
 app.use("/api/orders", orderRouter);
 app.use("/api/admin", adminRouter);
+
+app.use("/api/wishlist",wishRouter)
 
 export default app
