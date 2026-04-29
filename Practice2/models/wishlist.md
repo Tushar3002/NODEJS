@@ -1,3 +1,25 @@
+### 🔁 Quick Cheat Sheet
+Relationship Type	Sequelize
+One → Many	hasMany + belongsTo
+Many → Many	belongsToMany
+One → One	hasOne + belongsTo
+
+### 🧩 Your architecture (final understanding)
+
+✔ Orders → transactional data → direct relation → hasMany
+✔ OrderItems → breakdown of order → direct relation → hasMany
+✔ Wishlist → flexible mapping → needs join table → belongsToMany
+
+
+# ⚡ Simple mental trick (very useful)
+Question	If YES
+Can A have many B?	→ maybe hasMany
+Can B also have many A?	→ belongsToMany
+Can B have only ONE A?	→ belongsTo
+
+
+
+
 If you want to turn that content into a proper `.md` (Markdown) file, here’s how to do it cleanly and correctly.
 
 ### 1. Create a Markdown file
