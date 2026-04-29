@@ -1,21 +1,34 @@
+![ERD](./images/erd.png)
+
+
+
 ### 🔁 Quick Cheat Sheet
-Relationship Type	Sequelize
-One → Many	hasMany + belongsTo
-Many → Many	belongsToMany
-One → One	hasOne + belongsTo
 
-### 🧩 Your architecture (final understanding)
+| Relationship Type | Sequelize                  |
+|------------------|---------------------------|
+| One → Many       | hasMany + belongsTo       |
+| Many → Many      | belongsToMany             |
+| One → One        | hasOne + belongsTo        |
 
-✔ Orders → transactional data → direct relation → hasMany
-✔ OrderItems → breakdown of order → direct relation → hasMany
-✔ Wishlist → flexible mapping → needs join table → belongsToMany
+---
+
+### 🧩 Your Architecture (Final Understanding)
+
+✔ **Orders** → transactional data → direct relation → `hasMany`  
+✔ **OrderItems** → breakdown of order → direct relation → `hasMany`  
+✔ **Wishlist** → flexible mapping → needs join table → `belongsToMany`  
+
+---
+
+### ⚡ Simple Mental Trick (Very Useful)
+
+| Question                          | If YES → Use           |
+|----------------------------------|------------------------|
+| Can A have many B?               | → maybe `hasMany`      |
+| Can B also have many A?          | → `belongsToMany`      |
+| Can B have only ONE A?           | → `belongsTo`          |
 
 
-# ⚡ Simple mental trick (very useful)
-Question	If YES
-Can A have many B?	→ maybe hasMany
-Can B also have many A?	→ belongsToMany
-Can B have only ONE A?	→ belongsTo
 
 
 
