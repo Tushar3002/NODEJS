@@ -1,4 +1,4 @@
-![ERD](./images/erd.png)
+![ERD](../images/erd.png)
 
 
 
