@@ -11,4 +11,6 @@ authRouter.post("/login",validate(loginValidation), login);
 
 authRouter.get("/me", verifyToken, getCurrentUser);
 
+
+
 export default authRouter;

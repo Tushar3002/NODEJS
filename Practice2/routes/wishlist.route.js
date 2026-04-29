@@ -1,15 +1,15 @@
 import { Router } from "express";
-import { verifyToken } from "../middleware/auth.middleware.js";
+import { isUser, verifyToken } from "../middleware/auth.middleware.js";
 import { addWishlist, getWishList, removeWishList } from "../controllers/wishlist.controller.js";
 
 
 const wishRouter=Router()
 
 
-wishRouter.post('/',verifyToken,addWishlist)
+wishRouter.post('/',verifyToken,isUser, addWishlist)
 
-wishRouter.get('/',verifyToken,getWishList)
+wishRouter.get('/',verifyToken,isUser,getWishList)
 
-wishRouter.delete('/:productId',verifyToken,removeWishList)
+wishRouter.delete('/:productId',verifyToken,isUser,removeWishList)
 
 export default wishRouter

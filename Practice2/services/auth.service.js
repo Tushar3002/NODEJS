@@ -4,7 +4,13 @@ import jwt from "jsonwebtoken";
 
 const SECRET = process.env.MY_SECRET;
 
-export const registerUser = async ({ name, email, password }) => {
+export const registerUser = async ({
+  name,
+  email,
+  password,
+  phone,
+  address,
+}) => {
   const existingUser = await User.findOne({ where: { email } });
 
   if (existingUser) {
@@ -17,19 +23,18 @@ export const registerUser = async ({ name, email, password }) => {
     name,
     email,
     password: hashed,
+    phone,
+    address
   });
 
-  const token = jwt.sign(
-    { id: user.id, role: user.role },
-    SECRET,
-    { expiresIn: "1d" }
-  );
+  const token = jwt.sign({ id: user.id, role: user.role }, SECRET, {
+    expiresIn: "1d",
+  });
 
   const { password: _, ...userData } = user.toJSON();
 
   return { user: userData, token };
 };
-
 
 export const loginUser = async ({ email, password }) => {
   const user = await User.findOne({ where: { email } });
@@ -44,18 +49,16 @@ export const loginUser = async ({ email, password }) => {
     throw new Error("Wrong password");
   }
 
-  const token = jwt.sign(
-    { id: user.id, role: user.role },
-    SECRET,
-    { expiresIn: "1d" }
-  );
+  const token = jwt.sign({ id: user.id, role: user.role }, SECRET, {
+    expiresIn: "1d",
+  });
 
   const { password: _, ...userData } = user.toJSON();
 
   return { user: userData, token };
 };
 
-export const getUser = async(id)=>{
-    const user = await User.findOne({where:{id}})
-    return user;
-}
+export const getUser = async (id) => {
+  const user = await User.findOne({ where: { id } });
+  return user;
+};

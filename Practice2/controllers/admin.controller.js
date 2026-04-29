@@ -73,3 +73,13 @@ export const updateOrderStatus = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+
+export const getAllUsersDetails = async(req,res)=>{
+  try {
+    const data = await User.findAll()
+    return res.status(200).json(data)
+  } catch (error) {
+    return res.status(500).json({error:err.message})
+  }
+}
