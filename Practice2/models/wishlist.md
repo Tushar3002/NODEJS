@@ -1,3 +1,4 @@
+![ERD](../images/Dia.png)
 ![ERD](../images/erd.png)
 
 

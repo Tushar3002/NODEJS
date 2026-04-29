@@ -11,6 +11,8 @@ const OrderItem = sequelize.define("OrderItem", {
     type: DataTypes.FLOAT,
     allowNull: false,
   },
+  productName: DataTypes.STRING,
+  imageUrl: DataTypes.STRING,
 });
 
 export default OrderItem

@@ -16,6 +16,14 @@ const Product = sequelize.define("Product", {
   imageUrl: {
     type: DataTypes.STRING,
   },
+  stock: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+  },
+
+  category: {
+    type: DataTypes.STRING,
+  },
 });
 
 export default Product;

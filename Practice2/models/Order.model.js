@@ -11,6 +11,22 @@ const Order = sequelize.define("Order", {
     type: DataTypes.STRING,
     defaultValue: "pending",
   },
+   paymentMethod: {
+    type: DataTypes.STRING, 
+  },
+
+  paymentStatus: {
+    type: DataTypes.STRING,
+    defaultValue: "pending",
+  },
+
+  shippingAddress: {
+    type: DataTypes.TEXT,
+  },
+
+  deliveredAt: {
+    type: DataTypes.DATE,
+  },
 });
 
 export default Order
