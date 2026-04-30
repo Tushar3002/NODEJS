@@ -64,7 +64,17 @@ export const updateOrderStatus = async (req, res) => {
       return res.status(404).json({ message: "Order not found" });
     }
 
+    if (order.status === "delivered") {
+      return res.status(400).json({
+        message: "Delivered order cannot be updated",
+      });
+    }
+
     order.status = status;
+
+    if (status === "delivered") {
+      order.deliveredAt = new Date();
+    }
     await order.save();
 
     res.json({ message: "Order updated", order });
@@ -91,6 +101,8 @@ export const updatePaymentStatus = async(req,res)=>{
 }
 
 
+
+
 export const getAllUsersDetails = async(req,res)=>{
   try {
     const data = await User.findAll()
@@ -110,3 +122,27 @@ export const deleteUser = async(req,res)=>{
     return res.status(500).json({error:error.message})
   }
 }
+
+export const updateRole=async(req,res)=>{
+  try {
+    const {id}=req.params
+    const data=req.body
+    const [updated]=await User.update(data,{where:{id}})
+
+    if (!updated) return null;
+    const myData= await User.findByPk(id);
+  return res.status(200).json(myData)
+  } catch (error) {
+    return res.status(500).json({message:error.message})
+  }
+}
+
+
+
+// 🆚 Two approaches  used
+// 1️⃣ Direct update (your updateRole)
+// await User.update({ role }, { where: { id } });
+// 2️⃣ Fetch → modify → save (your updatePaymentStatus)
+// const order = await Order.findByPk(id);
+// order.paymentStatus = paymentStatus;
+// await order.save();
