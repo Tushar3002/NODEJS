@@ -80,6 +80,17 @@ export const getAllUsersDetails = async(req,res)=>{
     const data = await User.findAll()
     return res.status(200).json(data)
   } catch (error) {
-    return res.status(500).json({error:err.message})
+    return res.status(500).json({error:error.message})
+  }
+}
+
+export const deleteUser = async(req,res)=>{
+  try {
+    const deleted = await User.destroy({ where:{id:req.params.id}})
+    if(!deleted) return res.status(404).json({message:"USer NOT Found"})
+
+    return res.status(200).json({message:"User has been deleted"})
+  } catch (error) {
+    return res.status(500).json({error:error.message})
   }
 }
