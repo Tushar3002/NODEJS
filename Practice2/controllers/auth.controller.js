@@ -1,7 +1,6 @@
 import { getUser, loginUser, registerUser } from "../services/auth.service.js";
 
 
-
 export const register = async (req, res) => {
   try {
     const data = await registerUser(req.body);
@@ -63,6 +62,8 @@ export const getCurrentUser = async (req, res) => {
   try {
     const user = await getUser(req.user.id);
 
+
+    // const { password: _, ...userData } = user.toJSON();
     res.status(200).json({
       success: true,
       data: user
