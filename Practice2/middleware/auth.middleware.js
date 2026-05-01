@@ -6,7 +6,7 @@ export const verifyToken = (req, res, next) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
-    return res.status(401).json({ message: "No token" });
+    return res.status(401).json({ message: "UnAuthorized" });
   }
 
   try {
@@ -29,9 +29,12 @@ export const isAdmin = (req, res, next) => {
 };
 
 export const isUser = (req,res,next)=>{
-  if(req.user.role !== "user"){
-    return res.status(403).json({message:"Only User Allowed"})
-  }
+  if (req.user.role !== "user") {
+  return res.status(403).json({
+    success: false,
+    message: "Wishlist is only for users"
+  });
+}
 
   next();
 }

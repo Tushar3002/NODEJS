@@ -71,7 +71,7 @@ export const createOrder = async (req, res) => {
     const productIds = items.map((i) => i.productId);
 
     const products = await Product.findAll({
-      where: { id: productIds },  
+      where: { id: productIds },
       transaction: t,
     });
 
@@ -123,12 +123,16 @@ export const createOrder = async (req, res) => {
     await t.commit();
 
     res.status(201).json({
-      message: "Order created successfully",
+      success: true,
+      message: "Order placed successfully",
       orderId: order.id,
     });
   } catch (err) {
     await t.rollback();
-    res.status(500).json({ error: err.message });
+    return res.status(400).json({
+      success: false,
+      message: "No items in order",
+    });
   }
 };
 
@@ -168,6 +172,6 @@ export const getOrder = async (req, res) => {
 
     res.json(orders);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ message: err.message });
   }
 };

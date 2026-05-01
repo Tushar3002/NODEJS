@@ -4,12 +4,41 @@ import * as WishListServices from "../services/wishlist.service.js";
 export const addWishlist = async (req, res) => {
   try {
     const data = await WishListServices.addWishlist(
-        req.user.id,
-        req.body.productId
+      req.user.id,
+      req.body.productId
     );
-    res.status(201).json(data);
+
+    res.status(201).json({
+      success: true,
+      message: "Added to wishlist",
+      data
+    });
+
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+};
+
+export const removeWishList = async (req, res) => {
+  try {
+    await WishListServices.removeWish(
+      req.user.id,
+      req.params.productId
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "Removed from wishlist"
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
   }
 };
 
@@ -18,20 +47,8 @@ export const getWishList = async (req, res) => {
     const data = await WishListServices.getWishList(req.user.id);
     res.status(200).json(data);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
 
-export const removeWishList=async(req,res)=>{
-    try {
-        const data=await WishListServices.removeWish(
-            req.user.id,
-            req.params.productId
-        )   
-        res.status(200).json({success:true})    
-    } catch (error) {
-               res.status(500).json({error: error.message})
- 
-    }
-}

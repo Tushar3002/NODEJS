@@ -48,7 +48,7 @@ export const getAllOrders = async (req, res) => {
 
     res.json(orders);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -61,12 +61,16 @@ export const updateOrderStatus = async (req, res) => {
     const order = await Order.findByPk(id);
 
     if (!order) {
-      return res.status(404).json({ message: "Order not found" });
+      return res.status(404).json({
+        success: false,
+        message: "Order not found"
+      });
     }
 
     if (order.status === "delivered") {
       return res.status(400).json({
-        message: "Delivered order cannot be updated",
+        success: false,
+        message: "Delivered order cannot be updated"
       });
     }
 
@@ -75,12 +79,20 @@ export const updateOrderStatus = async (req, res) => {
     if (status === "delivered") {
       order.deliveredAt = new Date();
     }
+
     await order.save();
 
-    res.json({ message: "Order updated", order });
+    res.status(200).json({
+      success: true,
+      message: "Order updated successfully",
+      data: order
+    });
 
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({
+      success: false,
+      message: err.message
+    });
   }
 };
 
@@ -108,7 +120,7 @@ export const getAllUsersDetails = async(req,res)=>{
     const data = await User.findAll()
     return res.status(200).json(data)
   } catch (error) {
-    return res.status(500).json({error:error.message})
+    return res.status(500).json({message:error.message})
   }
 }
 
@@ -119,7 +131,7 @@ export const deleteUser = async(req,res)=>{
 
     return res.status(200).json({message:"User has been deleted"})
   } catch (error) {
-    return res.status(500).json({error:error.message})
+    return res.status(500).json({message:error.message})
   }
 }
 
