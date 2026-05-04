@@ -34,5 +34,4 @@ export {
   Order,
   OrderItem,
   WishList
-  
 };

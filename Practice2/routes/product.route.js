@@ -13,11 +13,11 @@ import { createProductSchema, updateProductSchema } from "../validations/product
 
 const productRouter = Router();
 
-//public routes
+//public
 productRouter.get("/", getAllProduct);
 productRouter.get("/:id", getSingleProduct);
 
-//admin routes
+//admin
 productRouter.post("/", verifyToken, isAdmin,validate(createProductSchema), createProduct);
 productRouter.put("/:id", verifyToken, isAdmin, validate(updateProductSchema), updateProduct);
 productRouter.delete("/:id", verifyToken, isAdmin, deleteProduct);

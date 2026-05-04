@@ -10,10 +10,10 @@ const adminRouter = express.Router();
 
 adminRouter.get("/dashboard", verifyToken, isAdmin, adminDashboard);
 
-adminRouter.get("/allUsers",getAllUsersDetails)
+adminRouter.get("/allUsers", verifyToken, isAdmin, getAllUsersDetails)
 
 adminRouter.delete("/deleteUser/:id",verifyToken,isAdmin,deleteUser)
 
-adminRouter.put("/updateUser/:id",updateRole)
+adminRouter.put("/updateUser/:id", verifyToken, isAdmin, updateRole)
 
 export default adminRouter;
